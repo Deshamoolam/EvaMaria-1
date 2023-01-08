@@ -8,7 +8,7 @@ from utils import get_size, temp, get_settings
 from Script import script
 from pyrogram.errors import ChatAdminRequired
 
-"""-----------------------------------------https://t.me/GetTGLink/4179 --------------------------------------"""
+
 
 @Client.on_message(filters.new_chat_members & filters.group)
 async def save_group(bot, message):
@@ -22,7 +22,7 @@ async def save_group(bot, message):
         if message.chat.id in temp.BANNED_CHATS:
             # Inspired from a boat of a banana tree
             buttons = [[
-                InlineKeyboardButton('🌐 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 🌐', url=f'https://t.me/{SUPPORT_CHAT}')
+                InlineKeyboardButton('🌐 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 🌐', url=f'https://t.me/raixchat')
             ]]
             reply_markup=InlineKeyboardMarkup(buttons)
             k = await message.reply(
@@ -37,7 +37,7 @@ async def save_group(bot, message):
             await bot.leave_chat(message.chat.id)
             return
         buttons = [[
-            InlineKeyboardButton('🌐 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 🌐', url=f"https://t.me/{SUPPORT_CHAT}"),
+            InlineKeyboardButton('🌐 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 🌐', url=f"https://t.me/raixchat"),
             InlineKeyboardButton('📢 𝖴𝗉𝖽𝖺𝗍𝖾𝗌', url='https://t.me/rai_info17')
         ]]
         reply_markup=InlineKeyboardMarkup(buttons)
@@ -67,7 +67,7 @@ async def leave_a_chat(bot, message):
         chat = chat
     try:
         buttons = [[
-            InlineKeyboardButton('🌐 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 🌐', url=f'https://t.me/{SUPPORT_CHAT}')
+            InlineKeyboardButton('🌐 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 🌐', url=f'https://t.me/raixchat')
         ]]
         reply_markup=InlineKeyboardMarkup(buttons)
         await bot.send_message(
@@ -106,7 +106,7 @@ async def disable_chat(bot, message):
     await message.reply('Chat Successfully Disabled')
     try:
         buttons = [[
-            InlineKeyboardButton('🌐 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 🌐', url=f'https://t.me/{SUPPORT_CHAT}')
+            InlineKeyboardButton('🌐 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 🌐', url=f'https://t.me/raixchat')
         ]]
         reply_markup=InlineKeyboardMarkup(buttons)
         await bot.send_message(
@@ -139,7 +139,7 @@ async def re_enable_chat(bot, message):
 
 @Client.on_message(filters.command('stats') & filters.incoming)
 async def get_ststs(bot, message):
-    rju = await message.reply('Fetching stats..')
+    rju = await message.reply('Fetching stats...')
     total_users = await db.total_users_count()
     totl_chats = await db.total_chat_count()
     files = await Media.count_documents()

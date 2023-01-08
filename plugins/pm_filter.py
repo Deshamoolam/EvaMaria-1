@@ -12,6 +12,7 @@ from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GRO
     SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram import Client, filters, enums
+from plugins.admin_check import admin_fliter
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid
 from utils import get_size, is_subscribed, get_poster, search_gagala, temp, get_settings, save_group_settings
 from database.users_chats_db import db
@@ -21,6 +22,10 @@ from database.filters_mdb import (
     find_filter,
     get_filters,
 )
+from database.gfilters_mdb import (
+    find_gfilter,
+    get_gfilters,
+)
 import logging
 
 logger = logging.getLogger(__name__)
@@ -29,10 +34,9 @@ logger.setLevel(logging.ERROR)
 BUTTONS = {}
 SPELL_CHECK = {}
 
-
-@Client.on_message(filters.group & filters.text & filters.incoming)
+@Client.on_message((filters.group | filters.private) & filters.text & filters.incoming)
 async def give_filter(client, message):
-    k = await manual_filters(client, message)
+    k = await global_filters(client, message)
     if k == False:
         await auto_filter(client, message)
 
@@ -148,7 +152,7 @@ async def advantage_spoll_choker(bot, query):
             await auto_filter(bot, query, k)
         else:
             k = await query.message.edit('❕ 𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗠𝗼𝘃𝗶𝗲 𝗼𝗿 𝗦𝗲𝗿𝗶𝗲𝘀 𝗡𝗼𝘁 𝗔𝘃𝗮𝗶𝗹𝗮𝗯𝗹𝗲 ❕\n\n❌𝖮𝖳𝖳 𝗈𝗋 𝖣𝖵𝖣 𝖭𝗈𝗍 𝖱𝖾𝗅𝖾𝖺𝗌𝖾𝖽❌\n‼️𝖳𝗒𝗉𝖾 𝖭𝖺𝗆𝖾 𝖶𝗂𝗍𝗁 𝖸𝖾𝖺𝗋‼️\n\n🔎𝖬𝗈𝗏𝗂𝖾 𝖨𝗌 𝖭𝗈𝗍 𝖠𝗏𝖺𝗂𝗅𝖺𝖻𝗅𝖾 𝗂𝗇 𝗍𝗁𝖾 𝖽𝖺𝗍𝖺𝖻𝖺𝗌𝖾 𝖱𝖾𝗉𝗈𝗋𝗍 𝗍𝗈 𝖠𝖽𝗆𝗂𝗇🔎\n\n📥 𝗥𝗲𝗽𝗼𝗿𝘁 𝘁𝗼 𝗔𝗱𝗺𝗶𝗻 𝗕𝘆 📥\n@raixpiro_bot')
-            await asyncio.sleep(21)
+            await asyncio.sleep(10)
             await k.delete()
 
 
@@ -375,6 +379,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     chat_id=query.from_user.id,
                     file_id=file_id,
                     caption=f_caption,
+                    reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⚔️ 𝖯𝖨𝖱𝖮 𝖴𝖯𝖣𝖠𝖳𝖤𝖲 ⚔️', url='https://t.me/rai_info17') ] ] ),
                     protect_content=True if ident == "filep" else False 
                 )
                 await query.answer('𝖢𝗁𝖾𝖼𝗄 𝖯𝖬, 𝖨 𝗁𝖺𝗏𝖾 𝗌𝖾𝗇𝗍 𝖿𝗂𝗅𝖾𝗌 𝗂𝗇 𝖯𝖬', show_alert=True)
@@ -414,6 +419,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             chat_id=query.from_user.id,
             file_id=file_id,
             caption=f_caption,
+            reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⚔️ 𝖯𝖨𝖱𝖮 𝖴𝖯𝖣𝖠𝖳𝖤𝖲 ⚔️', url='https://t.me/rai_info17') ] ] ),
             protect_content=True if ident == 'checksubp' else False
         )
     elif query.data == "pages":
@@ -633,8 +639,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data == 'reqst1':
         await query.answer("𝖧𝖾𝗒 𝖡𝗋𝗈 😍\n\n🎯 𝖢𝗅𝗂𝖼𝗄 𝖮𝗇 𝖳𝗁𝖾 𝖡𝗎𝗍𝗍𝗈𝗇 𝖻𝖾𝗅𝗈𝗐 𝖳𝗁𝖾 𝖥𝗂𝗅𝖾𝗌 𝖸𝗈𝗎 𝖶𝖺𝗇𝗍 𝖠𝗇𝖽 𝖲𝗍𝖺𝗋𝗍 𝖳𝗁𝖾 𝖡𝗈𝗍 ⬇️", True)
     elif query.data == 'info':
-        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\n\n• 𝖲𝗈𝗅𝗈 2017\n• 𝖣𝗁𝗈𝗈𝗆 3 𝖧𝗂𝗇𝖽𝗂\n• 𝖪𝗎𝗋𝗎𝗉 𝖪𝖺𝗇𝗇𝖺𝖽𝖺\n• 𝖣𝖺𝗋𝗄 𝗌01\n• 𝖲𝗁𝖾 𝖧𝗎𝗅𝗄 720𝗉\n• 𝖥𝗋𝗂𝖾𝗇𝖽𝗌 𝗌03 1080𝗉\n\n‼️𝗗𝗼𝗻𝘁 𝗮𝗱𝗱 𝘄𝗼𝗿𝗱𝘀 & 𝘀𝘆𝗺𝗯𝗼𝗹𝘀 𝗹𝗶𝗸𝗲 , . - send link movie series 𝗲𝘁𝗰‼️", True)
-    try: await query.answer('𝖥𝗂𝗅𝖾𝗌 𝖺𝗋𝖾 𝗍𝗁𝖾𝗋𝖾 𝗂𝗇 𝖻𝖾𝗅𝗈𝗐 𝖿𝗂𝗅𝗍𝖾𝗋 𝖡𝗎𝗍𝗍𝗈𝗇𝗌')
+        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\n\n• 𝖲𝗈𝗅𝗈 2017\n• 𝖣𝗁𝗈𝗈𝗆 3 𝖧𝗂𝗇𝖽𝗂\n• 𝖪𝗎𝗋𝗎𝗉 𝖪𝖺𝗇𝗇𝖺𝖽𝖺\n• 𝖣𝖺𝗋𝗄 𝗌01\n• 𝖲𝗁𝖾 𝖧𝗎𝗅𝗄 720𝗉\n• 𝖥𝗋𝗂𝖾𝗇𝖽𝗌 𝗌03 1080𝗉\n\n‼️𝗗𝗼𝗻𝘁 𝗮𝗱𝗱 𝘄𝗼𝗿𝗱𝘀 & 𝘀𝘆𝗺𝗯𝗼𝗹𝘀  , . - 𝗹𝗶𝗸𝗲 send link movie series 𝗲𝘁𝗰‼️", True)
+    try: await query.answer('Piracy is Crime')
     except: pass
 
 
@@ -673,11 +679,11 @@ async def auto_filter(client, msg, spoll=False):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"{file.file_name}",
+                    text=f"🔖{get_size(file.file_size)}🔮{file.file_name}",
                     callback_data=f'{pre}#{file.file_id}',
                 ),
                 InlineKeyboardButton(
-                    text=f"{get_size(file.file_size)}",
+                    text=f"🔖{get_size(file.file_size)}🔮{file.file_name}",
                     callback_data=f'{pre}#{file.file_id}',
                 ),
             ]
@@ -743,20 +749,31 @@ async def auto_filter(client, msg, spoll=False):
             **locals()
         )
     else:
-        cap = f"🌚 𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n✅ 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒\n\n♨️ 𝖯𝗈𝗐𝖾𝗋𝖾𝖽 𝖡𝗒 @rai_info17"
+        cap = f"👋 𝖧𝖾𝗅𝗅𝗈 𝖳𝗁𝖾𝗋𝖾...!!!\n📁 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒\n\n♨️ 𝖯𝗈𝗐𝖾𝗋𝖾𝖽 𝖡𝗒 @rai_info17"
     if imdb and imdb.get('poster'):
         try:
-            await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
+            hehe =  await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
                                       reply_markup=InlineKeyboardMarkup(btn))
+            if SELF_DELETE:
+                await asyncio.sleep(300)
+                await hehe.delete()
         except (MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty):
             pic = imdb.get('poster')
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
-            await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
+            hmm = await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
+            if SELF_DELETE:
+                await asyncio.sleep(300)
+                await hmm.delete()
         except Exception as e:
             logger.exception(e)
-            await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
+            fek = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
+            if SELF_DELETE:
+                await asyncio.sleep(300)
+                await fek.delete()
     else:
-        await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
+        fuk = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
+        await asyncio.sleep(300)
+        await fuk.delete()        
     if spoll:
         await msg.message.delete()
 
@@ -832,35 +849,121 @@ async def manual_filters(client, message, text=False):
                 try:
                     if fileid == "None":
                         if btn == "[]":
-                            await client.send_message(
+                            knd3 = await client.send_message(
                                 group_id, 
                                 reply_text, 
                                 disable_web_page_preview=True,
-                                reply_to_message_id=reply_id)
+                                reply_to_message_id=reply_id
+                            )
+                            await asyncio.sleep(300)
+                            await knd3.delete()
+                            await message.delete()
+
                         else:
                             button = eval(btn)
-                            await client.send_message(
+                            knd2 = await client.send_message(
                                 group_id,
                                 reply_text,
                                 disable_web_page_preview=True,
                                 reply_markup=InlineKeyboardMarkup(button),
                                 reply_to_message_id=reply_id
                             )
+                            await asyncio.sleep(300)
+                            await knd2.delete()
+                            await message.delete()
+
                     elif btn == "[]":
-                        await client.send_cached_media(
+                        knd1 = await client.send_cached_media(
                             group_id,
                             fileid,
                             caption=reply_text or "",
                             reply_to_message_id=reply_id
                         )
+                        await asyncio.sleep(300)
+                        await knd1.delete()
+                        await message.delete()
+
                     else:
                         button = eval(btn)
-                        await message.reply_cached_media(
+                        knd5 = await message.reply_cached_media(
                             fileid,
                             caption=reply_text or "",
                             reply_markup=InlineKeyboardMarkup(button),
                             reply_to_message_id=reply_id
                         )
+                        await asyncio.sleep(300)
+                        await knd5.delete()
+                        await message.delete()
+
+                except Exception as e:
+                    logger.exception(e)
+                break
+    else:
+        return False
+
+async def global_filters(client, message, text=False):
+    group_id = message.chat.id
+    name = text or message.text
+    reply_id = message.reply_to_message.id if message.reply_to_message else message.id
+    keywords = await get_gfilters('gfilters')
+    for keyword in reversed(sorted(keywords, key=len)):
+        pattern = r"( |^|[^\w])" + re.escape(keyword) + r"( |$|[^\w])"
+        if re.search(pattern, name, flags=re.IGNORECASE):
+            reply_text, btn, alert, fileid = await find_gfilter('gfilters', keyword)
+
+            if reply_text:
+                reply_text = reply_text.replace("\\n", "\n").replace("\\t", "\t")
+
+            if btn is not None:
+                try:
+                    if fileid == "None":
+                        if btn == "[]":
+                            knd3 = await client.send_message(
+                                group_id, 
+                                reply_text, 
+                                disable_web_page_preview=True,
+                                reply_to_message_id=reply_id
+                            )
+                            await asyncio.sleep(300)
+                            await knd3.delete()
+                            await message.delete()
+
+                        else:
+                            button = eval(btn)
+                            knd2 = await client.send_message(
+                                group_id,
+                                reply_text,
+                                disable_web_page_preview=True,
+                                reply_markup=InlineKeyboardMarkup(button),
+                                reply_to_message_id=reply_id
+                            )
+                            await asyncio.sleep(300)
+                            await knd2.delete()
+                            await message.delete()
+
+                    elif btn == "[]":
+                        knd1 = await client.send_cached_media(
+                            group_id,
+                            fileid,
+                            caption=reply_text or "",
+                            reply_to_message_id=reply_id
+                        )
+                        await asyncio.sleep(300)
+                        await knd1.delete()
+                        await message.delete()
+
+                    else:
+                        button = eval(btn)
+                        knd4 = await message.reply_cached_media(
+                            fileid,
+                            caption=reply_text or "",
+                            reply_markup=InlineKeyboardMarkup(button),
+                            reply_to_message_id=reply_id
+                        )
+                        await asyncio.sleep(300)
+                        await knd4.delete()
+                        await message.delete()
+
                 except Exception as e:
                     logger.exception(e)
                 break

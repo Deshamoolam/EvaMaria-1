@@ -19,7 +19,7 @@ class script(object):
 ○  𝗂𝗍'𝗌 𝖭𝗈𝗍𝖾 𝖢𝗈𝗆𝗉𝗅𝗂𝖼𝖺𝗍𝖾𝖽...🤓
 
 ○  𝖲𝖾𝖺𝗋𝖼𝗁 𝗎𝗌𝗂𝗇𝗀 𝗂𝗇𝗅𝗂𝗇𝖾 𝗆𝗈𝖽𝖾
-𝖳𝗁𝗂𝗌 𝗆𝖾𝗍𝗁𝗈𝖽 𝗐𝗈𝗋𝗄𝗌 𝗈𝗇 𝖺𝗇𝗒 𝖼𝗁𝖺𝗍, 𝖩𝗎𝗌𝗍 𝗍𝗒𝗉𝖾 `@maixrai_bot` 𝖺𝗇𝖽 𝗍𝗁𝖾𝗇 𝗅𝖾𝖺𝗏𝖾 𝖺 𝗌𝗉𝖺𝖼𝖾 𝖺𝗇𝖽 𝗌𝖾𝖺𝗋𝖼𝗁 𝖺𝗇𝗒 𝗆𝗈𝗏𝗂𝖾 𝗒𝗈𝗎 𝗐𝖺𝗇𝗍...
+𝖳𝗁𝗂𝗌 𝗆𝖾𝗍𝗁𝗈𝖽 𝗐𝗈𝗋𝗄𝗌 𝗈𝗇 𝖺𝗇𝗒 𝖼𝗁𝖺𝗍, 𝖩𝗎𝗌𝗍 𝗍𝗒𝗉𝖾 <b>Bot Username</b> 𝖺𝗇𝖽 𝗍𝗁𝖾𝗇 𝗅𝖾𝖺𝗏𝖾 𝖺 𝗌𝗉𝖺𝖼𝖾 𝖺𝗇𝖽 𝗌𝖾𝖺𝗋𝖼𝗁 𝖺𝗇𝗒 𝗆𝗈𝗏𝗂𝖾 𝗒𝗈𝗎 𝗐𝖺𝗇𝗍...
 
 🙋🏻‍♂️ 𝖳𝗎𝗍𝗈𝗋𝗂𝖺𝗅 𝖦𝗎𝗂𝖽𝖾 @piro_tuts
 
@@ -27,10 +27,12 @@ class script(object):
      
  /start - Check I'm Alive..
  /status - Bot Status
- /info - User info 
+ /info - User info
+ /alive - To check you are alive
+ /ping - To get your ping
  /id - User id
  /stats - Db status  
- /broadcast - Broadcast (**𝖮𝗐𝗇𝖾𝗋 𝖮𝗇𝗅𝗒**)
+ /broadcast - Broadcast (𝖮𝗐𝗇𝖾𝗋 𝖮𝗇𝗅𝗒)
 
 ○ 𝖭𝗈𝗍𝗂𝖼𝖾 📙:-
 
@@ -65,7 +67,13 @@ class script(object):
 • /filter - <code>add a filter in chat</code>
 • /filters - <code>list all the filters of a chat</code>
 • /del - <code>delete a specific filter in chat</code>
-• /delall - <code>delete the whole filters in a chat (chat owner only)</code>"""
+• /delall - <code>delete the whole filters in a chat (chat owner only)</code>
+
+<b>Adv Global Filter </b>
+• /gfilter - <code>ᴛᴏ ᴀᴅᴅ ɢʟᴏʙᴀʟ ғɪʟᴛᴇʀs</code>
+• /gfilters - <code>ᴛᴏ ᴠɪᴇᴡ ʟɪsᴛ ᴏғ ᴀʟʟ ɢʟᴏʙᴀʟ ғɪʟᴛᴇʀs<code>
+• /delg - <code>ᴛᴏ ᴅᴇʟᴇᴛᴇ ᴀ sᴘᴇᴄɪғɪᴄ ɢʟᴏʙᴀʟ ғɪʟᴛᴇʀ</code>
+• /delallg - <code>ᴛᴏ ᴅᴇʟᴇᴛᴇ ᴀʟʟ ɢʟᴏʙᴀʟ ꜰɪʟᴛᴇʀꜱ</code>"""
     BUTTON_TXT = """Help: <b>Buttons</b>
 
 - Eva Maria Supports both url and alert inline buttons.
@@ -100,16 +108,28 @@ class script(object):
 • /connect  - <code>connect a particular chat to your PM</code>
 • /disconnect  - <code>disconnect from a chat</code>
 • /connections - <code>list all your connections</code>"""
-    EXTRAMOD_TXT = """Help: <b>Extra Modules</b>
+    EXTRAMOD_TXT = """Help: <b>Admin mods</b>
 
 <b>NOTE:</b>
-these are the extra features of Eva Maria
+This module only works for my admins
 
 <b>Commands and Usage:</b>
-• /id - <code>get id of a specified user.</code>
-• /info  - <code>get information about a user.</code>
-• /imdb  - <code>get the film information from IMDb source.</code>
-• /search  - <code>get the film information from various sources.</code>"""
+• /logs - <code>to get the rescent errors</code>
+• /stats - <code>to get status of files in db.</code>
+• /delete - <code>to delete a specific file from db.</code>
+• /users - <code>to get list of my users and ids.</code>
+• /chats - <code>to get list of the my chats and ids </code>
+• /leave  - <code>to leave from a chat.</code>
+• /disable  -  <code>do disable a chat.</code>
+• /inkick - command with required arguments and i will kick members from group.
+• /instatus - to check current status of chat member from group.
+• /inkick within_month long_time_ago - to kick users who are offline for more than 6-7 days.
+• /inkick long_time_ago - to kick members who are offline for more than a month and Deleted Accounts.
+• /dkick - to kick deleted accounts.
+• /ban  - <code>to ban a user.</code>
+• /unban  - <code>to unban a user.</code>
+• /channel - <code>to get list of total connected channels</code>
+• /broadcast - <code>to broadcast a message to all users</code>"""
     ADMIN_TXT = """Help: <b>Admin mods</b>
 
 <b>NOTE:</b>
@@ -123,6 +143,11 @@ This module only works for my admins
 • /chats - <code>to get list of the my chats and ids </code>
 • /leave  - <code>to leave from a chat.</code>
 • /disable  -  <code>do disable a chat.</code>
+• /inkick - command with required arguments and i will kick members from group.
+• /instatus - to check current status of chat member from group.
+• /inkick within_month long_time_ago - to kick users who are offline for more than 6-7 days.
+• /inkick long_time_ago - to kick members who are offline for more than a month and Deleted Accounts.
+• /dkick - to kick deleted accounts.
 • /ban  - <code>to ban a user.</code>
 • /unban  - <code>to unban a user.</code>
 • /channel - <code>to get list of total connected channels</code>
@@ -133,7 +158,7 @@ This module only works for my admins
 𝖴𝗌𝖾𝖽 𝖲𝗍𝗈𝗋𝖺𝗀𝖾: <code>{}</code>
  """
     LOG_TEXT_G = """#NewGroup
-Group = {}(<code>{}</code>
+Group = {}(<code>{}</code>)
 Total Members = <code>{}</code>
 Added By - {}
 """
@@ -141,3 +166,14 @@ Added By - {}
 ID - <code>{}</code>
 Name - {}
 """
+CREATOR_REQUIRED = """❗<b>You have To Be The Group Creator To Do That.</b>"""
+      
+INPUT_REQUIRED = "❗ **Arguments Required**"
+      
+KICKED = """✔️ Successfully Kicked {} Members According To The Arguments Provided."""
+      
+START_KICK = """🚮 Removing Inactive Members This May Take A While..."""
+      
+ADMIN_REQUIRED = """Add Me Again with all admin rights.</b>"""
+      
+DKICK = """✔️ Kicked {} Deleted Accounts Successfully."""
